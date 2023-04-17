@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+
+<html lang="eng">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    
+    <body>
+
+        <form action="#" method="get">
+            <div>
+                <label for="author">Author's Name: </label>
+                <input type="text" name="author" id="author" class="input"> 
+            </div>
+            <div>
+                <label for="title">Title: </label>
+                <input type="text" name="title" id="title" class="input"> 
+            </div>
+            <div>
+                <label for="pages">Number of pages: </label>
+                <input type="number" name="pages" id="pages" class="input"> 
+            </div>
+        </form>
+
+    </body>
+
+    <script>
+        let myLibrary=[];
+
+        function Book(){
+            prompt()
+            this.author=author;
+            this.title=title;
+            this.num_pages=num_pages;
+        }
+
+        function addBooktoLibrary(){
+            var newBook=new Book()
+            myLibrayry.push(newBook);
+        }
+
+        function display_books(){}
+        for (let i=0;i<myLibrayry.length();i++){
+            console.log(myLibrary[i]);
+        }
+
+        const add_button=document.getElementById('submit');
+        document.add_book.addEventListener('click',function(){addBookToLibrary()});
+
+    </script>
+
+</html>
