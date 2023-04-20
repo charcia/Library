@@ -1,75 +1,17 @@
-<!DOCTYPE html>
+var submit = function () {
+    window.localStorage.name = document.getElementById('Name').value;
 
-<html lang="eng">
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    </head>
-    
-    <body>
+    // Save all the other fields
+    // You either return a non-false value here and let the form submit
+    // Or you return false and do a window.location change 
+};
 
-        <form action="#" method="get">
-            <div>
-                <label for="author">Author's Name: </label>
-                <input type="text" name="author" id="author" class="input"> 
-            </div>
-            <div>
-                <label for="title">Title: </label>
-                <input type="text" name="title" id="title" class="input"> 
-            </div>
-            <div>
-                <label for="pages">Number of pages: </label>
-                <input type="number" name="pages" id="pages" class="input"> 
-            </div>
-            <div>
-              <input type='submit' id=submit>
-        </form>
-        <div> <p id='display'></p></div>
-          <div> <button id=button>Click me</button> </div>
-      </body>
+window.onload = function () {
+    var form = document.getElementById('TheForm');
 
-    <script>
-        var myLibrary=[];
-        const book1={
-          author:'Ali',
-          title:'Guide to cooking',
-          pages:'100',
-        }
-        
-        const book2={
-          author:'Ali',
-          title:'Guide to learning',
-          pages:'100',
-        }
-        
-        myLibrary.push(book1)
-        myLibrary.push(book2)
-
-        function Book(){
-            prompt()
-            this.author=author;
-            this.title=title;
-            this.pages=pages;
-        }
-
-        function addBooktoLibrary(){
-            var newBook=new Book()
-            myLibrary.push(newBook);
-        }
-
-        function display_books(){
-        for (let i=0;i<myLibrary.length;i++){
-            alert(myLibrary[i]);
-        }
-
-      
-        const addBook=document.getElementById('submit');
-        const display=document.getElementById('display');
-      
-        document.getElementById('button').addEventListener('click',function(){display_books});
-        addBook.addEventListener('click',function(){addBookToLibrary()});
-
-    </script>
-
-</html>
+    if (form.attachEvent) {
+        form.attachEvent('submit', submit);
+    } else {
+        form.addEventListener('submit', submit);
+    }
+}
