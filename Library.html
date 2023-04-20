@@ -9,7 +9,7 @@
     
     <body>
 
-        <form action="#" method="get">
+        <form action="#" method="get" id="form">
             <div>
                 <label for="author">Author's Name: </label>
                 <input type="text" name="author" id="author" class="input"> 
@@ -22,32 +22,50 @@
                 <label for="pages">Number of pages: </label>
                 <input type="number" name="pages" id="pages" class="input"> 
             </div>
+            <input type="submit" id='submit'>
         </form>
+        <div id="card1">
+            <p class="author" id="output"></p>
+            <p class="title"></p>
+            <p class="pages"></p>
+        </div>
 
     </body>
 
     <script>
-        let myLibrary=[];
+        var myLibrary=[];
 
-        function Book(){
-            prompt()
-            this.author=author;
-            this.title=title;
-            this.num_pages=num_pages;
+        function Book(Title,Author,Pages){
+            this.author=Author;
+            this.title=Title;
+            this.pages=Pages;
         }
 
-        function addBooktoLibrary(){
-            var newBook=new Book()
-            myLibrayry.push(newBook);
+        function display_books(){
+            alert('it worked');
+            for (let i=0;i<myLibrary.length;i++){
+                let obj=myLibrary[i];
+                output.innerHTML=obj[author].toString();
+                }
         }
 
-        function display_books(){}
-        for (let i=0;i<myLibrayry.length();i++){
-            console.log(myLibrary[i]);
+        function addBookToLibrary(event){
+            event.preventDefault();
+            var Title=document.getElementById('title').value;
+            var Author=document.getElementById('author').value;
+            var Pages=document.getElementById('pages').value;
+            var newBook=new Book(Title,Author,Pages)
+            myLibrary.push(newBook);
+            alert(myLibrary.length);
+            display_books();
         }
 
-        const add_button=document.getElementById('submit');
-        document.add_book.addEventListener('click',function(){addBookToLibrary()});
+
+        const submit=document.getElementById('submit');
+        const output=document.getElementById('output');
+        const form=document.getElementById('form');
+
+        form.addEventListener('submit',function(){addBookToLibrary(event)});
 
     </script>
 
