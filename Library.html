@@ -5,6 +5,7 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="Library.css">
     </head>
     
     <body>
@@ -29,6 +30,9 @@
             <p class="title"></p>
             <p class="pages"></p>
         </div>
+        <div id="parent">
+
+        </div>
 
     </body>
 
@@ -41,11 +45,13 @@
             this.pages=Pages;
         }
 
+
         function display_books(){
             alert('it worked');
             for (let i=0;i<myLibrary.length;i++){
                 let obj=myLibrary[i];
-                output.innerHTML=obj[author].toString();
+                output.innerHTML=JSON.stringify(obj);
+                var newCard=document.createElement('div');
                 }
         }
 
@@ -56,8 +62,24 @@
             var Pages=document.getElementById('pages').value;
             var newBook=new Book(Title,Author,Pages)
             myLibrary.push(newBook);
-            alert(myLibrary.length);
             display_books();
+            var count=myLibrary.length;
+            var newCard=document.createElement('div');
+            newCard.id='card'+count+1;
+            newCard.className='card';
+            const parent=document.getElementById('parent');
+            parent.appendChild(newCard);
+            var newBook_len=(Object.keys(newBook)).length;
+            for (let i=0;i<newBook_len;i++){
+                var newRow=document.createElement('p');
+                var RowProp=JSON.stringify(newBook[i]);
+                alert(RowProp);
+                newRow.innerHTML=RowProp;
+                newCard.appendChild(newRow);
+               
+            };
+
+
         }
 
 
