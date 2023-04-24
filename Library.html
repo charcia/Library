@@ -70,13 +70,15 @@
             const parent=document.getElementById('parent');
             parent.appendChild(newCard);
             var newBook_len=(Object.keys(newBook)).length;
+            var Keys=Object.keys(newBook);
+            var Values=Object.values(newBook);
+            alert(JSON.stringify(Keys[2]));
+            alert(JSON.stringify(Values[2]));
             for (let i=0;i<newBook_len;i++){
                 var newRow=document.createElement('p');
-                var RowProp=JSON.stringify(newBook[i]);
-                alert(RowProp);
-                newRow.innerHTML=RowProp;
                 newCard.appendChild(newRow);
-               
+                var sentence=JSON.stringify(Keys[i]) +' : '+ JSON.stringify(Values[i])
+                newRow.innerHTML=sentence.replaceAll('"',' ')
             };
 
 
