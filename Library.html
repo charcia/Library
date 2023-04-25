@@ -9,27 +9,24 @@
     </head>
     
     <body>
-
-        <form action="#" method="get" id="form">
-            <div>
-                <label for="author">Author's Name: </label>
-                <input type="text" name="author" id="author" class="input"> 
-            </div>
-            <div>
-                <label for="title">Title: </label>
-                <input type="text" name="title" id="title" class="input"> 
-            </div>
-            <div>
-                <label for="pages">Number of pages: </label>
-                <input type="number" name="pages" id="pages" class="input"> 
-            </div>
-            <input type="submit" id='submit'>
-        </form>
-        <div id="card1">
-            <p class="author" id="output"></p>
-            <p class="title"></p>
-            <p class="pages"></p>
+        <div class="form-popup" id="myForm">
+            <form action="#" method="get" id="form">
+                <div>
+                    <label for="author">Author's Name: </label>
+                    <input type="text" name="author" id="author" class="input"> 
+                </div>
+                <div>
+                    <label for="title">Title: </label>
+                    <input type="text" name="title" id="title" class="input"> 
+                </div>
+                <div>
+                    <label for="pages">Number of pages: </label>
+                    <input type="number" name="pages" id="pages" class="input"> 
+                </div>
+                <input type="submit" id='submit'>
+            </form>
         </div>
+        <button id="open-form">Add book</button>
         <div id="parent">
 
         </div>
@@ -38,6 +35,9 @@
 
     <script>
         var myLibrary=[];
+        var newBook=[];
+        var Keys=[];
+        var Values=[];
 
         function Book(Title,Author,Pages){
             this.author=Author;
@@ -47,12 +47,27 @@
 
 
         function display_books(){
-            alert('it worked');
-            for (let i=0;i<myLibrary.length;i++){
-                let obj=myLibrary[i];
-                output.innerHTML=JSON.stringify(obj);
-                var newCard=document.createElement('div');
-                }
+            var count=myLibrary.length;
+            var newCard=document.createElement('div');
+            newCard.className='Card';
+            parent.appendChild(newCard);
+            var newBook_len=(Object.keys(newBook)).length;
+            Keys=Object.keys(newBook);
+            Values=Object.values(newBook);
+            for (let i=0;i<newBook_len;i++){
+                var newRow=document.createElement('p');
+                newCard.appendChild(newRow);
+                var sentence=JSON.stringify(Keys[i]) +' : '+ JSON.stringify(Values[i])
+                newRow.innerHTML=sentence.replaceAll('"',' ')
+            };
+            var removeBook=document.createElement('button');
+            removeBook.id=newBook.title;
+            removeBook.innerHTML='Remove book';
+            newCard.appendChild(removeBook);
+            removeBook.style.width='fit-content';
+            removeBook.style.height='25px';
+            form.reset();
+            myForm.style.display='none';
         }
 
         function addBookToLibrary(event){
@@ -60,36 +75,36 @@
             var Title=document.getElementById('title').value;
             var Author=document.getElementById('author').value;
             var Pages=document.getElementById('pages').value;
-            var newBook=new Book(Title,Author,Pages)
+            newBook=new Book(Title,Author,Pages)
             myLibrary.push(newBook);
             display_books();
-            var count=myLibrary.length;
-            var newCard=document.createElement('div');
-            newCard.id='card'+count+1;
-            newCard.className='card';
-            const parent=document.getElementById('parent');
-            parent.appendChild(newCard);
-            var newBook_len=(Object.keys(newBook)).length;
-            var Keys=Object.keys(newBook);
-            var Values=Object.values(newBook);
-            alert(JSON.stringify(Keys[2]));
-            alert(JSON.stringify(Values[2]));
-            for (let i=0;i<newBook_len;i++){
-                var newRow=document.createElement('p');
-                newCard.appendChild(newRow);
-                var sentence=JSON.stringify(Keys[i]) +' : '+ JSON.stringify(Values[i])
-                newRow.innerHTML=sentence.replaceAll('"',' ')
-            };
+        }
 
+        function displayForm(){
+            myForm.style.display='block';
+        }
 
+        function deleteBook(){
+            parent.removeChild();
         }
 
 
         const submit=document.getElementById('submit');
         const output=document.getElementById('output');
         const form=document.getElementById('form');
+        const parent=document.getElementById('parent');
+        const myForm=document.getElementById('myForm');
+        const popup=document.getElementById('open-form');
 
         form.addEventListener('submit',function(){addBookToLibrary(event)});
+        popup.addEventListener('click',function(){displayForm()});
+        document.querySelectorAll('button').forEach(occurence=>{
+            let id=occurence.getAttribute('id');
+            occurence.addEventListener('click',function(){
+                deleteBook();
+            })
+        })
+
 
     </script>
 
