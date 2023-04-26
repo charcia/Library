@@ -27,6 +27,7 @@
             </form>
         </div>
         <button id="open-form">Add book</button>
+        <p id="buttonList"></p>
         <div id="parent">
 
         </div>
@@ -62,6 +63,8 @@
             };
             var removeBook=document.createElement('button');
             removeBook.id=newBook.title;
+            removeBook.className='deleteBook';
+            /*alert(removeBook.id);*/
             removeBook.innerHTML='Remove book';
             newCard.appendChild(removeBook);
             removeBook.style.width='fit-content';
@@ -88,6 +91,10 @@
             parent.removeChild();
         }
 
+        function listenButton(){
+            alert('mouseOver');
+        }
+
 
         const submit=document.getElementById('submit');
         const output=document.getElementById('output');
@@ -95,16 +102,31 @@
         const parent=document.getElementById('parent');
         const myForm=document.getElementById('myForm');
         const popup=document.getElementById('open-form');
+        var buttons=document.querySelectorAll('button');
 
         form.addEventListener('submit',function(){addBookToLibrary(event)});
         popup.addEventListener('click',function(){displayForm()});
-        document.querySelectorAll('button').forEach(occurence=>{
+
+        document.addEventListener('DOMNodeInserted',function(){
+            document.getElementsByClassName('deleteBook').addEventListener('onclick',function(){
+                alert('it clicked');
+            })
+            /*alert(buttons.length);*/
+        })
+        
+        /*addEventListener('mouseover',function(){
+            alert('mouseOver');
+            listenButton(occurence);
+            })*/
+
+        /*document.querySelectorAll('button').forEach(occurence=>{
             let id=occurence.getAttribute('id');
             occurence.addEventListener('click',function(){
-                deleteBook();
+                alert(id);
             })
-        })
+        })*/
 
+        
 
     </script>
 
