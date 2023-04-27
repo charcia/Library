@@ -15,3 +15,9 @@
 #myForm{
     display:none;
 }
+
+#displayBooks{
+    width: fit-content;
+    height: 25px;
+    
+}

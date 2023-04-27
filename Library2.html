@@ -27,7 +27,8 @@
             </form>
         </div>
         <button id="open-form">Add book</button>
-        <p id="buttonList"></p>
+        <p id="NumBooks">Here is the number of books in inventory: </p>
+        <button id="displayBooks">Display books</button>
         <p id="Text"></p>
         <div id="parent">
 
@@ -40,6 +41,7 @@
         var newBook=[];
         var Keys=[];
         var Values=[];
+        var Lib_len=0;
 
         function Book(Title,Author,Pages){
             this.author=Author;
@@ -49,36 +51,21 @@
 
 
         function display_books(){
-            var count=myLibrary.length;
-            var newCard=document.createElement('div');
-            newCard.className='Card';
-            newCard.id=newBook.author;
-            parent.appendChild(newCard);
-            var newBook_len=(Object.keys(newBook)).length;
-            Keys=Object.keys(newBook);
-            Values=Object.values(newBook);
-            for (let i=0;i<newBook_len;i++){
-                var newRow=document.createElement('p');
-                newCard.appendChild(newRow);
-                var sentence=JSON.stringify(Keys[i]) +' : '+ JSON.stringify(Values[i])
-                newRow.innerHTML=sentence.replaceAll('"',' ')
+            parent.innerHTML=''
+            Lib_len=myLibrary.length;
+            for (var book of myLibrary){
+                var newCard=document.createElement('div');
+                newCard.id=myLibrary.indexOf(book);
+                newCard.className='Card';
+                parent.appendChild(newCard);
+                var keyList=Object.keys(book);
+                var valueList=Object.values(book);
+                for (let i=0;i<keyList.length;i++){
+                    var newLine=document.createElement('p');
+                    newCard.appendChild(newLine);
+                    newLine.innerHTML=keyList[i]+': '+valueList[i]+'<br>';
+                };
             };
-            var status=document.createElement('button');
-            status.id='status';
-            status.style.width='fit-content';
-            status.style.height='25px';
-            status.innerHTML='Unread';
-            status.style.backgroundColor='red';
-            newCard.appendChild(status);
-            var removeBook=document.createElement('button');
-            removeBook.className='deleteBook';
-            removeBook.id=newBook.title;
-            removeBook.innerHTML='Remove book';
-            newCard.appendChild(removeBook);
-            removeBook.style.width='fit-content';
-            removeBook.style.height='25px';
-            form.reset();
-            myForm.style.display='none';
         }
 
         function addBookToLibrary(event){
@@ -88,7 +75,9 @@
             var Pages=document.getElementById('pages').value;
             newBook=new Book(Title,Author,Pages);
             myLibrary.push(newBook);
-            display_books();
+            text.innerHTML=myLibrary.length;
+            form.reset();
+            myForm.style.display='none';
         }
 
         function displayForm(){
@@ -110,23 +99,22 @@
         const parent=document.getElementById('parent');
         const myForm=document.getElementById('myForm');
         const popup=document.getElementById('open-form');
+        const display=document.getElementById('displayBooks');
+        const text=document.getElementById('Text');
+
         var remove_button=document.getElementsByClassName('deleteBook');
         var buttons=document.querySelectorAll('button');
 
         form.addEventListener('submit',function(){addBookToLibrary(event)});
         popup.addEventListener('click',function(){displayForm()});
+        display.addEventListener('click',function(){display_books()});
 
         document.addEventListener('DOMNodeInserted',function(){
-            remove_button=document.getElementsByClassName('deleteBook');
-            buttons=document.querySelectorAll('button');
-            let button_len=remove_button.length;
-            document.getElementById('buttonList').innerHTML='Book qty: '+button_len;
+            
         });
         
        document.getElementById('parent').addEventListener('click',function(event){
-            var Card_Id=event.target.parentElement.id;
-            document.getElementById('Text').innerHTML=Card_Id ;
-            deleteBook(Card_Id);
+            
         });
 
     </script>
