@@ -5,70 +5,119 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="Library.css">
     </head>
     
     <body>
+        <div class="form-popup" id="myForm">
+            <form action="#" method="get" id="form">
+                <div>
+                    <label for="author">Author's Name: </label>
+                    <input type="text" name="author" id="author" class="input"> 
+                </div>
+                <div>
+                    <label for="title">Title: </label>
+                    <input type="text" name="title" id="title" class="input"> 
+                </div>
+                <div>
+                    <label for="pages">Number of pages: </label>
+                    <input type="number" name="pages" id="pages" class="input"> 
+                </div>
+                <input type="submit" id='submit'>
+            </form>
+        </div>
+        <button id="open-form">Add book</button>
+        <p id="buttonList"></p>
+        <p id="Text"></p>
+        <div id="parent">
 
-        <form action="#" method="get">
-            <div>
-                <label for="author">Author's Name: </label>
-                <input type="text" name="author" id="author" class="input"> 
-            </div>
-            <div>
-                <label for="title">Title: </label>
-                <input type="text" name="title" id="title" class="input"> 
-            </div>
-            <div>
-                <label for="pages">Number of pages: </label>
-                <input type="number" name="pages" id="pages" class="input"> 
-            </div>
-            <div>
-              <input type='submit' id=submit>
-        </form>
-        <div> <p id='display'></p></div>
-          <div> <button id=button>Click me</button> </div>
-      </body>
+        </div>
+
+    </body>
 
     <script>
         var myLibrary=[];
-        const book1={
-          author:'Ali',
-          title:'Guide to cooking',
-          pages:'100',
-        }
-        
-        const book2={
-          author:'Ali',
-          title:'Guide to learning',
-          pages:'100',
-        }
-        
-        myLibrary.push(book1)
-        myLibrary.push(book2)
+        var newBook=[];
+        var Keys=[];
+        var Values=[];
 
-        function Book(){
-            prompt()
-            this.author=author;
-            this.title=title;
-            this.pages=pages;
+        function Book(Title,Author,Pages){
+            this.author=Author;
+            this.title=Title;
+            this.pages=Pages;
         }
 
-        function addBooktoLibrary(){
-            var newBook=new Book()
-            myLibrary.push(newBook);
-        }
 
         function display_books(){
-        for (let i=0;i<myLibrary.length;i++){
-            alert(myLibrary[i]);
+            var count=myLibrary.length;
+            var newCard=document.createElement('div');
+            newCard.className='Card';
+            parent.appendChild(newCard);
+            var newBook_len=(Object.keys(newBook)).length;
+            Keys=Object.keys(newBook);
+            Values=Object.values(newBook);
+            for (let i=0;i<newBook_len;i++){
+                var newRow=document.createElement('p');
+                newCard.appendChild(newRow);
+                var sentence=JSON.stringify(Keys[i]) +' : '+ JSON.stringify(Values[i])
+                newRow.innerHTML=sentence.replaceAll('"',' ')
+            };
+            newCard.id=newCard.title;
+            var removeBook=document.createElement('button');
+            removeBook.className='deleteBook';
+            /*alert(removeBook.id);*/
+            removeBook.innerHTML='Remove book';
+            newCard.appendChild(removeBook);
+            removeBook.style.width='fit-content';
+            removeBook.style.height='25px';
+            form.reset();
+            myForm.style.display='none';
         }
 
-      
-        const addBook=document.getElementById('submit');
-        const display=document.getElementById('display');
-      
-        document.getElementById('button').addEventListener('click',function(){display_books});
-        addBook.addEventListener('click',function(){addBookToLibrary()});
+        function addBookToLibrary(event){
+            event.preventDefault();
+            var Title=document.getElementById('title').value;
+            var Author=document.getElementById('author').value;
+            var Pages=document.getElementById('pages').value;
+            newBook=new Book(Title,Author,Pages)
+            myLibrary.push(newBook);
+            display_books();
+        }
+
+        function displayForm(){
+            myForm.style.display='block';
+        }
+
+        function deleteBook(){
+            /*parent.removeChild();*/
+        }
+
+        function listenButton(){
+            alert('mouseOver');
+        }
+
+
+        const submit=document.getElementById('submit');
+        const output=document.getElementById('output');
+        const form=document.getElementById('form');
+        const parent=document.getElementById('parent');
+        const myForm=document.getElementById('myForm');
+        const popup=document.getElementById('open-form');
+        var remove_button=document.getElementsByClassName('deleteBook');
+        var buttons=document.querySelectorAll('button');
+
+        form.addEventListener('submit',function(){addBookToLibrary(event)});
+        popup.addEventListener('click',function(){displayForm()});
+
+        document.addEventListener('DOMNodeInserted',function(){
+              remove_button=document.getElementsByClassName('deleteBook');
+              buttons=document.querySelectorAll('button');
+              document.getElementById('buttonList').innerHTML='Book qty: '+remove_button.length;
+            })
+        
+       document.getElementById('parent').addEventListener('click',function(){
+         document.getElementById('Text').innerHTML='mouseover'
+       })
 
     </script>
 
