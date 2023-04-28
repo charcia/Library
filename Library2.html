@@ -43,6 +43,8 @@
         var Keys=[];
         var Values=[];
         var Lib_len=0;
+        const status1='Read'
+        const status2='Unread'
 
         function Book(Title,Author,Pages){
             this.author=Author;
@@ -71,7 +73,7 @@
                 newCard.appendChild(status);
                 var statButton=document.createElement('button');
                 statButton.id='status'+myLibrary.indexOf(book);
-                statButton.innerHTML='mark as Read'
+                statButton.innerHTML='Mark as '+status1;
                 statButton.style.width='fit-content';
                 statButton.style.height='25px';
                 newCard.appendChild(statButton);
@@ -142,6 +144,9 @@
          console.log('helloo'+card_id);
          if (target_id.includes('status')==false){
            deleteBook(card_id);
+         } else if (target_id.includes('status')==true){
+           status2.innerHTML=Status1;
+           statButton.innerHTML='Mark as '+Status2
          }
         });
 
