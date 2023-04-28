@@ -29,6 +29,7 @@
         <button id="open-form">Add book</button>
         <p id="NumBooks">Here is the number of books in inventory: </p>
         <button id="displayBooks">Display books</button>
+        <button id='hideBooks'>Hide books</button>
         <p id="Text"></p>
         <div id="parent">
 
@@ -65,8 +66,15 @@
                     newCard.appendChild(newLine);
                     newLine.innerHTML=keyList[i]+': '+valueList[i]+'<br>';
                 };
-            };
-        }
+                var buttonRemove=document.createElement('button');
+                buttonRemove.style.width='fit-content';
+                buttonRemove.style.height='25px';
+                buttonRemove.id=myLibrary.indexOf(book);
+                buttonRemove.innerHTML='Remove book';
+                newCard.appendChild(buttonRemove);
+              }; 
+          }
+      
 
         function addBookToLibrary(event){
             event.preventDefault();
@@ -75,21 +83,24 @@
             var Pages=document.getElementById('pages').value;
             newBook=new Book(Title,Author,Pages);
             myLibrary.push(newBook);
-            text.innerHTML=myLibrary.length;
+            numBooks.innerHTML='Number of books in library is: '+myLibrary.length;
             form.reset();
             myForm.style.display='none';
+            hide();
         }
 
         function displayForm(){
             myForm.style.display='block';
         }
 
-        function deleteBook(Card_Id){
-            parent.removeChild(document.getElementById(Card_Id));
+        function deleteBook(card_Id){
+            myLibrary.splice(card_Id,1);
+            parent.removeChild(document.getElementById(card_Id));
+            numBooks.innerHTML='Number of books in library is: '+myLibrary.length;
         }
-
-        function listenButton(){
-            alert('mouseOver');
+      
+        function hide(){
+          parent.innerHTML=''
         }
 
 
@@ -101,6 +112,8 @@
         const popup=document.getElementById('open-form');
         const display=document.getElementById('displayBooks');
         const text=document.getElementById('Text');
+        const numBooks=document.getElementById('NumBooks');
+        
 
         var remove_button=document.getElementsByClassName('deleteBook');
         var buttons=document.querySelectorAll('button');
@@ -108,13 +121,16 @@
         form.addEventListener('submit',function(){addBookToLibrary(event)});
         popup.addEventListener('click',function(){displayForm()});
         display.addEventListener('click',function(){display_books()});
+        document.getElementById('hideBooks').addEventListener('click',function(){hide()});
 
         document.addEventListener('DOMNodeInserted',function(){
             
         });
         
        document.getElementById('parent').addEventListener('click',function(event){
-            
+         var card_id=event.target.parentElement.id;
+         console.log('helloo'+card_id);
+         deleteBook(card_id);
         });
 
     </script>
