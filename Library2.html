@@ -66,6 +66,15 @@
                     newCard.appendChild(newLine);
                     newLine.innerHTML=keyList[i]+': '+valueList[i]+'<br>';
                 };
+                var status=document.createElement('p');
+                status.innerHTML='Status: Unread';
+                newCard.appendChild(status);
+                var statButton=document.createElement('button');
+                statButton.id='status'+myLibrary.indexOf(book);
+                statButton.innerHTML='mark as Read'
+                statButton.style.width='fit-content';
+                statButton.style.height='25px';
+                newCard.appendChild(statButton);
                 var buttonRemove=document.createElement('button');
                 buttonRemove.style.width='fit-content';
                 buttonRemove.style.height='25px';
@@ -129,8 +138,11 @@
         
        document.getElementById('parent').addEventListener('click',function(event){
          var card_id=event.target.parentElement.id;
+         var target_id=event.target.id;
          console.log('helloo'+card_id);
-         deleteBook(card_id);
+         if (target_id.includes('status')==false){
+           deleteBook(card_id);
+         }
         });
 
     </script>
