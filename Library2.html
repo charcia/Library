@@ -67,7 +67,7 @@
                 for (let i=0;i<keyList.length;i++){
                     var newLine=document.createElement('p');
                     newCard.appendChild(newLine);
-                    newLine.id='newLine '+i;
+                    newLine.id='newLine '+i+''+myLibrary.indexOf(book);
                     newLine.innerHTML=keyList[i]+': '+valueList[i]+'<br>';
                 };
                 var statButton=document.createElement('button');
@@ -140,6 +140,7 @@
        document.getElementById('parent').addEventListener('click',function(event){
          var card_id=event.target.parentElement.id;
          var target_id=event.target.id;
+         console.log(target_id);
          if (target_id.includes('status')==false){
            deleteBook(card_id);
          } else if (target_id.includes('status')==true){
@@ -147,12 +148,12 @@
            console.log(ind);
            if(myLibrary[ind].status==='Unread'){
              myLibrary[ind].status=status1;
-             let line=document.getElementById('newLine '+3);
+             let line=document.getElementById('newLine '+3+''+ind);
              console.log(line);
              line.innerHTML='status: '+status1;
            }else if(myLibrary[ind].status==='Read'){
              myLibrary[ind].status=status2;
-             let line=document.getElementById('newLine '+3);
+             let line=document.getElementById('newLine '+3+''+ind);
              console.log(line);
              line.innerHTML='status: '+status2;
            }
