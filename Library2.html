@@ -50,6 +50,7 @@
             this.author=Author;
             this.title=Title;
             this.pages=Pages;
+            this.status=status2;
         }
 
 
@@ -66,14 +67,12 @@
                 for (let i=0;i<keyList.length;i++){
                     var newLine=document.createElement('p');
                     newCard.appendChild(newLine);
+                    newLine.id='newLine '+i;
                     newLine.innerHTML=keyList[i]+': '+valueList[i]+'<br>';
                 };
-                var status=document.createElement('p');
-                status.innerHTML='Status: Unread';
-                newCard.appendChild(status);
                 var statButton=document.createElement('button');
                 statButton.id='status'+myLibrary.indexOf(book);
-                statButton.innerHTML='Mark as '+status1;
+                statButton.innerHTML='Change status';
                 statButton.style.width='fit-content';
                 statButton.style.height='25px';
                 newCard.appendChild(statButton);
@@ -141,12 +140,22 @@
        document.getElementById('parent').addEventListener('click',function(event){
          var card_id=event.target.parentElement.id;
          var target_id=event.target.id;
-         console.log('helloo'+card_id);
          if (target_id.includes('status')==false){
            deleteBook(card_id);
          } else if (target_id.includes('status')==true){
-           status2.innerHTML=Status1;
-           statButton.innerHTML='Mark as '+Status2
+           var ind=target_id.replace(/^\D+/g, '');
+           console.log(ind);
+           if(myLibrary[ind].status==='Unread'){
+             myLibrary[ind].status=status1;
+             let line=document.getElementById('newLine '+3);
+             console.log(line);
+             line.innerHTML='status: '+status1;
+           }else if(myLibrary[ind].status==='Read'){
+             myLibrary[ind].status=status2;
+             let line=document.getElementById('newLine '+3);
+             console.log(line);
+             line.innerHTML='status: '+status2;
+           }
          }
         });
 
